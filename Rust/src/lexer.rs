@@ -1,7 +1,7 @@
 use crate::tokens::Token;
 
 // Used to determine whether a character is a word character.
-const ALPHA: &str = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
+const ALPHA: &str = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz'";
 
 // Scans an input string slice, creating tokens and placing them into a result
 // vector.
