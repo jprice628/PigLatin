@@ -4,8 +4,7 @@ use crate::lexer::lex;
 const VOWELS: &str = "AaEeIiOoUuYy";
 
 pub fn pigify(input: &str) -> String {
-    let mut tokens = Vec::new();
-    lex(input, &mut tokens);
+    let tokens = lex(input);
 
     let mut result = String::new();
     let mut pigifier = Pigifier::new(&mut result);

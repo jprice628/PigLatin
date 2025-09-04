@@ -5,7 +5,7 @@ const ALPHA: &str = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz'";
 
 // Scans an input string slice, creating tokens and placing them into a result
 // vector.
-pub fn lex<'a, 'b>(input: &'a str, result: &'b mut Vec<Token<'a>>) {
+pub fn lex<'a>(input: &'a str) -> Vec<Token<'a>> {
     if input.len() == 0 {
         panic!("Input should contain at least one character.");
     }
@@ -14,8 +14,11 @@ pub fn lex<'a, 'b>(input: &'a str, result: &'b mut Vec<Token<'a>>) {
         panic!("Input should contain only ASCII characters.");
     }
 
-    let mut lexer: Lexer<'a, 'b> = Lexer::new(input, result);
+    let mut tokens: Vec<Token<'a>> = Vec::new();
+    let mut lexer = Lexer::new(input, &mut tokens);
     lexer.invoke();
+
+    tokens
 }
 
 // Manages state and performs lexigraphical analysis for the lex function.
