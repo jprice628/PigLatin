@@ -1,16 +1,20 @@
 use crate::tokens::Token;
+use crate::lexer::lex;
 
 const VOWELS: &str = "AaEeIiOoUuYy";
 
-// Converts a word to pig latin and appends it to a result string.
-pub fn pigify<'a>(tokens: &Vec<Token<'a>>, result: &mut String) {
-    if tokens.len() == 0 { return; }
+pub fn pigify(input: &str) -> String {
+    let mut tokens = Vec::new();
+    lex(input, &mut tokens);
 
-    let mut pigifier = Pigifier::new(result);
+    let mut result = String::new();
+    let mut pigifier = Pigifier::new(&mut result);
 
     for token in tokens {
-        pigifier.pigify_token(token);
+        pigifier.pigify_token(&token);
     }
+
+    result
 }
 
 // A service used to convert words to pig latin.
