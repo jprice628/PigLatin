@@ -4,20 +4,18 @@ use crate::lexer::lex;
 const VOWELS: &str = "AaEeIiOoUuYy";
 
 pub fn pigify(input: &str) -> String {
+    let mut pigifier = Pigifier::new();
     let tokens = lex(input);
-
-    let mut result = String::new();
-    let mut pigifier = Pigifier::new(&mut result);
 
     for token in tokens {
         pigifier.pigify_token(&token);
     }
 
-    result
+    pigifier.result()
 }
 
 // A service used to convert words to pig latin.
-struct Pigifier<'a> {    
+struct Pigifier {    
     // Tracks the state of the service based on the characters that are
     // encountered.
     state: State,
@@ -27,21 +25,21 @@ struct Pigifier<'a> {
     c_cluster: String,
 
     // The result string to which the translated word will be appended.
-    result: &'a mut String
+    result: String
 }
 
-impl<'a> Pigifier<'a> {
+impl Pigifier {
     // Creates a new pigifier.
-    fn new(result: &'a mut String) -> Pigifier<'a> {
+    fn new() -> Pigifier {
         Pigifier { 
             state: State::Start, 
             c_cluster: String::new(),
-            result: result
+            result: String::new()
         }
     }
 
     // Translates a token to Pig Latin and appends it to the result.
-    fn pigify_token(&mut self, token: &Token<'a>) {
+    fn pigify_token(&mut self, token: &Token<'_>) {
         match token {
             Token::Word(word) => self.push_word(word),
             Token::Special(special) => self.result.push_str(special)
@@ -135,6 +133,10 @@ impl<'a> Pigifier<'a> {
         }
 
         self.state = State::Start;
+    }
+
+    fn result(self) -> String {
+        self.result
     }
 }
 
