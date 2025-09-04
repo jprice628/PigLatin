@@ -14,37 +14,33 @@ pub fn lex<'a>(input: &'a str) -> Vec<Token<'a>> {
         panic!("Input should contain only ASCII characters.");
     }
 
-    let mut tokens: Vec<Token<'a>> = Vec::new();
-    let mut lexer = Lexer::new(input, &mut tokens);
-    lexer.invoke();
-
-    tokens
+    Lexer::new(input).invoke()
 }
 
 // Manages state and performs lexigraphical analysis for the lex function.
-struct Lexer<'a, 'b> {
+struct Lexer<'a> {
     // The string slice that will be tokenized.
     input: &'a str,
 
     // The vector into which tokens will be placed.
-    result: &'b mut Vec<Token<'a>>,
+    result: Vec<Token<'a>>,
 
     // A buffer used to track slices of word characters.
     buffer: Option<(usize, usize)>
 }
 
-impl<'a, 'b> Lexer<'a, 'b> {
+impl<'a> Lexer<'a> {
     // Instantiates a new lexer.
-    fn new(input: &'a str, result: &'b mut Vec<Token<'a>>) -> Lexer<'a, 'b> {
+    fn new(input: &'a str) -> Lexer<'a> {
         Lexer {
             input: input,
-            result: result,
+            result: Vec::new(),
             buffer: None
         }
     }
 
-    // Invokes the lexer.
-    fn invoke(&mut self) {
+    // Invokes the lexer and returns a vector of tokens.
+    fn invoke(mut self) -> Vec<Token<'a>> {
         self.result.clear();
 
         for (i, c) in self.input.chars().enumerate() {
@@ -58,6 +54,8 @@ impl<'a, 'b> Lexer<'a, 'b> {
         // If the input string ends in one or more word characters, the buffer
         // will still be referencing some data.
         self.push_buffer();
+
+        self.result
     }
 
     // Pushes the index of an alpha character onto the buffer.
