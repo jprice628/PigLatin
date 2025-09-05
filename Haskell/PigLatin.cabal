@@ -11,7 +11,7 @@ common warnings
 executable PigLatin
     import:           warnings
     main-is:          Main.hs
-    other-modules:    Tokens, Lexer
+    other-modules:    Tokens, Lexer, Pigifier
     build-depends:    base ^>=4.18.3.0
     hs-source-dirs:   app
     default-language: Haskell2010

@@ -1,10 +1,9 @@
 module Main where
 
-import Tokens ( printTokens )
-import Lexer ( lex' )
+import Pigifier (pigify)
 
 main :: IO ()
 main =
-    let input = "The quick brown fox jumped over the lazy sleeping dog."
-        tokens = lex' input
-     in printTokens tokens
+    let input = "Hello there! This is a simple test of the Pig Latin converter. It should handle punctuation, capitalization, and even tricky words like \"xylophone\" or \"rhythm.\" Don't forget contractions -- those apostrophes matter. Also, consider how to treat acronyms like NASA or abbreviations such as e.g., i.e., and etc. Finally, test how it deals with numbers: 42 apples, 3.14 pies, and 100% effort!"
+        result = pigify input
+     in putStrLn result
