@@ -3,6 +3,7 @@ module Pigifier (pigify) where
 
 import Tokens (Token (..))
 import Lexer (lex')
+import Data.List (foldl')
 
 -- A function that translates a string to ig-Pay atin-Lay.
 pigify :: String -> String
@@ -11,7 +12,7 @@ pigify input =
     -- Note: lex' returns tokens in reverse order, which is perfect for building
     -- a new string from them using the cons operator.
     let tokens = lex' input
-     in foldl pigifyToken "" tokens
+     in foldl' pigifyToken "" tokens
 
 -- Translates the token and prepends it to the provided string.
 pigifyToken :: String -> Token -> String
@@ -20,7 +21,7 @@ pigifyToken result (Word []) = result
 pigifyToken result (Word text@(c : _))
   | isVowel c = text ++ "-yay" ++ result
   | otherwise =
-      let pigified = buildResult $ foldl pushChar StartState text
+      let pigified = buildResult $ foldl' pushChar StartState text
        in pigified ++ result
 
 -- Pushes a character onto a state.

@@ -2,13 +2,14 @@
 module Lexer (lex') where
 
 import Tokens ( Token(..) )
+import Data.List (foldl')
 
 -- A function that tokenizes a string. Note: tokens are returned in reverse
 -- order.
 lex' :: String -> [Token]
 lex' text =
   let state0 = State [] []
-      state1 = finalize $ foldl push state0 text
+      state1 = finalize $ foldl' push state0 text
    in getTokens state1
 
 -- Pushes a character onto a state, processing them and generating tokens as
