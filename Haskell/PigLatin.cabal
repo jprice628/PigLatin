@@ -1,0 +1,17 @@
+cabal-version:      3.0
+name:               PigLatin
+version:            0.1.0.0
+author:             jprice628
+maintainer:         jprice628@hotmail.com
+build-type:         Simple
+
+common warnings
+    ghc-options: -Wall
+
+executable PigLatin
+    import:           warnings
+    main-is:          Main.hs
+    other-modules:    Tokens, Lexer, Pigifier
+    build-depends:    base ^>=4.18.3.0
+    hs-source-dirs:   app
+    default-language: Haskell2010
