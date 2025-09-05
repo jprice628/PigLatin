@@ -1,4 +1,8 @@
 module Main where
 
+import Tokens
+
 main :: IO ()
-main = putStrLn "Hello, Haskell!"
+main = 
+    let tokens = [Word "Hello", Special ',', Special ' ', Word "World", Special '!']
+     in printTokens tokens
